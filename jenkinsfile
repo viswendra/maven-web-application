@@ -1,0 +1,17 @@
+node('master'){
+    def mavenHome = tool name: "maven3.9.6"
+    stage('CheckOutCode'){
+        git credentialsId: 'a3cdb76f-357e-464c-b6aa-086579d662a9', url: 'https://github.com/viswendra/maven-web-application.git'
+    }
+    
+    stage('Build'){
+        sh "${mavenHome}/bin/mvn clean package"
+    }
+    
+    stage('Deployment to tomcat-Server'){
+        sshagent(['61d62fb6-a321-4d01-a55d-3ed833d04d58']) {
+            sh " scp -o StrictHostKeyChecking=no target/maven-web-application.war ubuntu@65-1-109-119:/home/ubuntu/tomcat/webapps/"
+        }
+    }
+    
+}
