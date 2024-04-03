@@ -1,4 +1,5 @@
-node('master'){
+node
+{
     def mavenHome = tool name: "maven3.9.6"
     stage('CheckOutCode'){
         git credentialsId: 'a3cdb76f-357e-464c-b6aa-086579d662a9', url: 'https://github.com/viswendra/maven-web-application.git'
